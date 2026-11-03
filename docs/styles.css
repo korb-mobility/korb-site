@@ -87,7 +87,6 @@ h2 { margin: 0; font-size: 26px; line-height: 1.15; font-weight: 800; font-stret
 .lead { margin: 0 0 12px; font-size: 21px; line-height: 1.35; font-weight: 500; font-style: normal; max-width: 34em; }
 .band p { max-width: 38em; }
 .small { color: var(--muted); font-size: 14.5px; margin: 0; }
-.todo { background: #fde047; color: #000; padding: 0 .25em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 
 .facts { margin: 0; }
 .facts div { display: grid; grid-template-columns: 6.5em 1fr; gap: 12px; padding-block: 12px; border-top: 1px solid var(--line); }

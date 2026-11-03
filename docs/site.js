@@ -1,7 +1,7 @@
 /* Everything you may want to change is in this block. */
 var CONFIG = {
   // Set to true once the Genehmigung is granted: shows the ride request and the ride sections.
-  licensed: false,
+  licensed: true,
   // Set to false before publishing: removes the blue preview bar and the demo note.
   preview: false,
   whatsapp: "4915777104912",
