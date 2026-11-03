@@ -1,8 +1,8 @@
 # Korb Mobility website
 
-Static site in `site/`: no build step, no cookies, fonts hosted locally.
+Static site in `docs/`, published with GitHub Pages: no build step, no cookies, fonts hosted locally.
 
-Open `site/site.js` and set before going live:
+Open `docs/site.js` and set before going live:
 
 - `preview: false` removes the blue preview bar
 - `pricing` holds the tariff (demo values until compared with real prices)
@@ -12,4 +12,4 @@ Open `site/site.js` and set before going live:
 
 Yellow highlighted text in `impressum.html` and `datenschutz.html` must be filled in before publishing.
 
-Preview: `python3 -m http.server 4173 --directory site`
+Preview: `python3 -m http.server 4173 --directory docs`
