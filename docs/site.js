@@ -549,7 +549,7 @@ function resolveTyped(key, force) {
 document.querySelectorAll("[data-place]").forEach(function (b) {
   b.addEventListener("click", function () {
     // Fills the empty field; with both filled, a tap replaces the destination.
-    choose(b.getAttribute("data-target") || (picked.from ? "to" : "from"), PLACES[b.getAttribute("data-place")]);
+    choose(b.getAttribute("data-target") || (document.getElementById("from").value.trim() ? "to" : "from"), PLACES[b.getAttribute("data-place")]);
     if (b.getAttribute("data-target")) {
       document.getElementById("fahrt").scrollIntoView();
       document.getElementById(picked.from ? "send" : "from").focus({ preventScroll: true });
