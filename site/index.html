@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Korb Mobility | Mietwagen mit Fahrer in Frankfurt am Main</title>
+<meta name="description" content="Korb Mobility: Mietwagen mit Fahrer in Frankfurt am Main. Kontakt speichern, auf WhatsApp schreiben oder anrufen.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/vendor/maplibre-gl.css">
+<link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"Korb Mobility","telephone":"+4915777104912","address":{"@type":"PostalAddress","streetAddress":"Im Mainfeld 40","postalCode":"60528","addressLocality":"Frankfurt am Main","addressCountry":"DE"}}
+</script>
+</head>
+<body data-licensed="false">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5Zm5.5 13.4c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.8-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l.9-1c.2-.3.4-.2.7-.1l2 .9c.3.2.5.2.5.4.1.1.1.7-.1 1.3Z"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7.5 8c.5-3.7 3.500-6 7.500-6 1.300 0 2.500.2 3.500.7V20H4.500Zm15-8v3h3v2h-3v3h-2v-3h-3v-2h3v-3h2Z"/></symbol>
+  <symbol id="i-call" viewBox="0 0 24 24"><path d="M6.600 3.500 9 3l2 4.600-2 1.600a12 12 0 0 0 5.800 5.800l1.600-2 4.600 2-.5 2.400c-.2 1-1 1.600-2 1.600C10.800 19 5 13.200 5 5.500c0-1 .6-1.800 1.600-2Z"/></symbol>
+</svg>
+
+<aside class="preview-bar" id="preview-bar" hidden>
+  <span>Vorschau</span>
+  <label><input type="checkbox" id="preview-licensed"> Genehmigung erteilt</label>
+  <label><input type="checkbox" id="preview-price"> Preis anzeigen</label>
+</aside>
+
+<header class="hero">
+  <div class="topbar">
+    <div class="lang" role="group" aria-label="Sprache / Language">
+      <button type="button" data-lang="de" aria-pressed="true">DE</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+  <div class="wrap hero-in">
+    <h1 class="mark" aria-label="Korb Mobility">
+      <span class="mark-row" aria-hidden="true"><span class="mark-word">Korb</span><span class="mark-dot"></span></span>
+      <span class="mark-sub" aria-hidden="true"><span>m</span><span>o</span><span>b</span><span>i</span><span>l</span><span>i</span><span>t</span><span>y</span></span>
+    </h1>
+    <p class="tagline" data-i18n="tagline">Mietwagen mit Fahrer in Frankfurt am Main.</p>
+
+    <div class="hero-foot">
+      <div class="actions">
+        <a class="btn btn-main js-wa" href="https://wa.me/4915777104912"><svg aria-hidden="true"><use href="#i-wa"/></svg><span data-i18n="ctaWa">Auf WhatsApp schreiben</span></a>
+        <a class="btn" href="korb-mobility.vcf" download="Korb-Mobility.vcf"><svg aria-hidden="true"><use href="#i-save"/></svg><span data-i18n="ctaSave">Kontakt speichern</span></a>
+        <a class="btn" href="tel:+4915777104912"><svg aria-hidden="true"><use href="#i-call"/></svg><span data-i18n="ctaCall">Anrufen</span></a>
+      </div>
+      <p class="number">
+        <span>+49 1577 7104912</span>
+        <button type="button" class="link-btn" data-copy="+4915777104912" data-i18n="copyNumber">Nummer kopieren</button>
+      </p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="band when-unlicensed">
+    <div class="wrap grid">
+      <h2 data-i18n="soonTitle">Start in Kürze</h2>
+      <div>
+        <p class="lead" data-i18n="soonLead">Der Fahrbetrieb startet, sobald unsere Genehmigung erteilt ist.</p>
+        <p data-i18n="soonBody">Speichern Sie unsere Nummer schon jetzt. Fahrten nehmen wir ab dem Start an.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band when-licensed" id="fahrt">
+    <div class="wrap grid">
+      <h2 data-i18n="bookTitle">Fahrt anfragen</h2>
+      <form id="book" class="form" autocomplete="off">
+        <div class="field f-wide" data-field="from">
+          <label for="from" data-i18n="from">Abholung</label>
+          <input id="from" name="from" required role="combobox" aria-expanded="false" aria-controls="from-list" aria-autocomplete="list" data-i18n-ph="addrPh" placeholder="Adresse eingeben">
+          <ul class="suggest" id="from-list" role="listbox" hidden></ul>
+          <button type="button" class="link-btn" id="locate" data-i18n="locate">Meinen Standort verwenden</button>
+        </div>
+        <div class="field f-wide" data-field="to">
+          <label for="to" data-i18n="to">Ziel</label>
+          <input id="to" name="to" required role="combobox" aria-expanded="false" aria-controls="to-list" aria-autocomplete="list" data-i18n-ph="addrPh" placeholder="Adresse eingeben">
+          <ul class="suggest" id="to-list" role="listbox" hidden></ul>
+        </div>
+        <div class="chips f-wide" role="group" aria-label="Häufige Ziele">
+          <button type="button" data-place="fra1">Flughafen T1</button>
+          <button type="button" data-place="fra2">Flughafen T2</button>
+          <button type="button" data-place="hbf" data-i18n="chipHbf">Hauptbahnhof</button>
+          <button type="button" data-place="messe" data-i18n="chipMesse">Messe</button>
+        </div>
+        <div class="map f-wide" id="map" aria-label="Karte"></div>
+        <label><span data-i18n="date">Datum</span><input name="date" type="date" required></label>
+        <label><span data-i18n="time">Uhrzeit</span><input name="time" type="time" required></label>
+        <label><span data-i18n="people">Personen</span>
+          <select name="people"><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
+        <label><span data-i18n="flight">Flugnummer (optional)</span><input name="flight" autocapitalize="characters" placeholder="LH 123"></label>
+        <label class="check f-wide"><input type="checkbox" name="childseat"><span data-i18n="childseat">Kindersitz gewünscht</span></label>
+        <p class="status f-wide" id="status" role="status" aria-live="polite"></p>
+        <div class="price-box f-wide" id="result" hidden>
+          <p class="price" id="price"></p>
+          <p class="trip" id="trip"></p>
+          <p class="small" id="price-note"></p>
+        </div>
+        <button class="btn btn-main f-wide" type="submit" data-i18n="send">Auf WhatsApp senden</button>
+        <p class="small f-wide" data-i18n="preorder">Unsere Fahrten sind immer vorbestellt. Die Fahrt gilt, sobald wir sie auf WhatsApp bestätigt haben.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="band when-licensed" id="ablauf">
+    <div class="wrap grid">
+      <h2 data-i18n="howTitle">So buchen Sie</h2>
+      <ol class="steps">
+        <li data-i18n="how1">Abholung und Ziel eingeben.</li>
+        <li data-i18n="how2">Datum und Uhrzeit wählen.</li>
+        <li data-i18n="how3">Auf WhatsApp senden und unsere Bestätigung erhalten.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band when-licensed" id="flughafen">
+    <div class="wrap grid">
+      <h2 data-i18n="airTitle">Flughafen Frankfurt</h2>
+      <div>
+        <p class="lead" data-i18n="airLead">Buchen Sie Ihre Fahrt zum Flughafen oder vom Flughafen im Voraus.</p>
+        <ul class="plain">
+          <li data-i18n="air1">Geben Sie bei der Abholung Ihre Flugnummer an, dann planen wir die Ankunft mit ein.</li>
+          <li><span class="todo" data-i18n="air2">Nach der Landung warten wir 45 Minuten ohne Aufpreis.</span></li>
+          <li><span class="todo" data-i18n="air3">Bis 1 Stunde vor der Abholung kostenlos stornieren.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band when-licensed" id="klasse">
+    <div class="wrap grid">
+      <h2 data-i18n="classTitle">Fahrzeugklasse</h2>
+      <div>
+        <p class="lead" data-i18n="classLead">Wir fahren in der Comfort- und Premium-Klasse.</p>
+        <p data-i18n="classBody">In anderen Fahrdienst-Apps entspricht das den Kategorien Comfort und Premium.</p>
+        <p class="small" data-i18n="classLegal">Mietwagen mit Fahrer nach §&nbsp;49&nbsp;Abs.&nbsp;4&nbsp;PBefG.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band when-licensed" id="sicherheit">
+    <div class="wrap grid">
+      <h2 data-i18n="safeTitle">Sicherheit</h2>
+      <ul class="plain">
+        <li data-i18n="safe1">Das Fahrzeug wird jede Woche geprüft.</li>
+        <li data-i18n="safe2">Führerschein und Personenbeförderungsschein prüfen wir vor dem ersten Einsatz und danach mindestens vierteljährlich.</li>
+        <li><span class="todo" data-i18n="safe3">Vor der Fahrt erhalten Sie auf WhatsApp Fahrername und Kennzeichen.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band when-licensed" id="business">
+    <div class="wrap grid">
+      <h2 data-i18n="bizTitle">Für Unternehmen</h2>
+      <div>
+        <p class="lead"><span class="todo" data-i18n="bizLead">Fahrten für Mitarbeitende und Gäste, mit einer gemeinsamen Rechnung pro Monat.</span></p>
+        <a class="btn btn-small js-wa-biz" href="https://wa.me/4915777104912" data-i18n="bizCta">Angebot auf WhatsApp anfragen</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band when-licensed" id="fragen">
+    <div class="wrap grid">
+      <h2 data-i18n="faqTitle">Häufige Fragen</h2>
+      <div class="faq">
+        <details><summary data-i18n="q1">Wie entsteht der Preis?</summary><p data-i18n="a1">Aus Strecke und Fahrzeit Ihrer Route, also auch abhängig vom Verkehr. Den Endpreis inklusive Umsatzsteuer sehen Sie vor dem Absenden.</p></details>
+        <details><summary data-i18n="q2">Kann ich an der Straße einsteigen?</summary><p data-i18n="a2">Nein. Als Mietwagen dürfen wir nur vorab eingegangene Aufträge fahren.</p></details>
+        <details><summary data-i18n="q3">Wie viel Gepäck passt ins Auto?</summary><p><span class="todo" data-i18n="a3">Bei 4 Personen 4 große Koffer. Bei mehr Gepäck schreiben Sie uns vorher.</span></p></details>
+        <details><summary data-i18n="q4">Wie lange wartet der Fahrer?</summary><p><span class="todo" data-i18n="a4">5 Minuten ab der vereinbarten Zeit ohne Aufpreis, am Flughafen 45 Minuten nach der Landung.</span></p></details>
+        <details><summary data-i18n="q5">Wie kann ich bezahlen?</summary><p><span class="todo" data-i18n="a5">Bar oder mit Karte im Fahrzeug.</span></p></details>
+        <details><summary data-i18n="q6">Bekomme ich eine Rechnung?</summary><p data-i18n="a6">Ja. Schreiben Sie uns einfach die Rechnungsadresse auf WhatsApp.</p></details>
+        <details><summary data-i18n="q7">Ich habe etwas im Auto vergessen.</summary><p data-i18n="a7">Schreiben Sie uns auf WhatsApp mit Datum und Strecke Ihrer Fahrt.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="standort">
+    <div class="wrap grid">
+      <h2 data-i18n="placeTitle">Betriebssitz</h2>
+      <div>
+        <address class="lead">Im Mainfeld 40<br>60528 Frankfurt am Main</address>
+        <p class="row">
+          <a class="btn btn-small" href="https://www.google.com/maps/search/?api=1&amp;query=Im%20Mainfeld%2040%2C%2060528%20Frankfurt%20am%20Main" rel="noopener" data-i18n="openMap">In Karten öffnen</a>
+          <button type="button" class="btn btn-small" id="share" data-i18n="share">Seite teilen</button>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band only-desktop" id="scan">
+    <div class="wrap grid">
+      <h2 data-i18n="scanTitle">Aufs Handy holen</h2>
+      <div class="qr">
+        <figure><img src="assets/qr-whatsapp.svg" alt="" width="176" height="176"><figcaption data-i18n="scanWa">Scannen, um WhatsApp zu öffnen</figcaption></figure>
+        <figure><img src="assets/qr-contact.svg" alt="" width="176" height="176"><figcaption data-i18n="scanSave">Scannen, um den Kontakt zu speichern</figcaption></figure>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-row">
+    <span>Korb Mobility</span>
+    <a href="mailto:korb.mobility@gmail.com">korb.mobility@gmail.com</a>
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html" data-i18n="privacy">Datenschutz</a>
+  </div>
+</footer>
+
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="site.js"></script>
+</body>
+</html>

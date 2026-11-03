@@ -1,0 +1,4 @@
+.DS_Store
+.claude/
+examples/
+.impeccable/hook.cache.json
