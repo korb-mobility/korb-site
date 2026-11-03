@@ -20,6 +20,7 @@ var CONFIG = {
     traffic: "https://api.tomtom.com/routing/1/calculateRoute/",
     // Free, no key. demoRoute has no traffic and is only used in the preview.
     search: "https://photon.komoot.io/api/",
+    backupSearch: "https://api.tomtom.com/search/2/search/",
     reverse: "https://photon.komoot.io/reverse",
     demoRoute: "https://router.project-osrm.org/route/v1/driving/",
     mapStyle: "https://tiles.openfreemap.org/styles/dark"
@@ -42,7 +43,29 @@ var EN = {
   soonTitle: "Starting soon",
   soonLead: "Rides start as soon as our licence is granted.",
   soonBody: "Save our number now. We take rides from the day we start.",
-  bookTitle: "Request a ride",
+  bookTitle: "Where can we take you?",
+  whenLegend: "When do you want to ride?",
+  asap: "As soon as possible",
+  later: "Choose a time",
+  swap: "Swap pick-up and destination",
+  quoteClass: "Comfort and Premium",
+  quoteSeats: "Up to 4 people, with driver",
+  factKm: "Distance",
+  factMin: "Driving time",
+  factTraffic: "Traffic",
+  factArrive: "Arrival approx.",
+  benTitle: "Plan your ride ahead",
+  ben1T: "Price before you send",
+  ben1: "You see the distance, driving time, traffic and final price before you message us.",
+  ben2T: "Your pick-up time",
+  ben2: "You choose the day and time. We confirm the ride directly on WhatsApp.",
+  ben3T: "Time to get in",
+  ben3: "5 minutes of waiting are included; at the airport, 45 minutes after landing.",
+  ben4T: "Cancel free of charge",
+  ben4: "You pay nothing up to 1 hour before pick-up.",
+  airCta: "See the price to the airport",
+  q8: "Where does the traffic data come from?",
+  a8: "From TomTom. For a ride now we use current traffic; for a later time, the usual traffic at that hour.",
   from: "Pick-up",
   to: "Destination",
   addrPh: "Enter an address",
@@ -104,14 +127,14 @@ var TEXT = {
   de: {
     greet: "Hallo Korb Mobility,", biz: "Hallo Korb Mobility, wir interessieren uns für Fahrten für unser Unternehmen.",
     copied: "Kopiert", request: "Fahrtanfrage", from: "Abholung", to: "Ziel", date: "Datum", time: "Uhrzeit", people: "Personen", flight: "Flug", childseat: "Kindersitz gewünscht", price: "Angezeigter Preis",
-    finalPrice: "Endpreis inkl. MwSt., abhängig vom Verkehr.",
+    finalPrice: "Endpreis inkl. MwSt., mit dem aktuellen Verkehr.", finalPriceLater: "Endpreis inkl. MwSt., mit dem üblichen Verkehr zu dieser Uhrzeit.", noDelay: "frei", delay: "+{n} Min.", whenLabel: "Zeit", asap: "So früh wie möglich",
     demo: "Vorschau: Beispieltarif ohne Verkehrsdaten.", working: "Route wird berechnet", failed: "Den Preis nennen wir Ihnen auf WhatsApp.", noAddress: "Adresse nicht gefunden. Bitte prüfen Sie die Eingabe.",
     tooFar: "Für so lange Strecken machen wir Ihnen ein Angebot auf WhatsApp.", noLocation: "Ihr Standort ist nicht verfügbar. Bitte geben Sie die Adresse ein.", myLocation: "Mein Standort", minutes: "Min.", locale: "de-DE"
   },
   en: {
     greet: "Hello Korb Mobility,", biz: "Hello Korb Mobility, we are interested in rides for our company.",
     copied: "Copied", request: "Ride request", from: "Pick-up", to: "Destination", date: "Date", time: "Time", people: "People", flight: "Flight", childseat: "Child seat needed", price: "Price shown",
-    finalPrice: "Final price including VAT, based on traffic.",
+    finalPrice: "Final price including VAT, with current traffic.", finalPriceLater: "Final price including VAT, with the usual traffic at this hour.", noDelay: "clear", delay: "+{n} min", whenLabel: "Time", asap: "As soon as possible",
     demo: "Preview: sample tariff without traffic data.", working: "Calculating your route", failed: "We will send you the price on WhatsApp.", noAddress: "Address not found. Please check what you entered.",
     tooFar: "For trips this long we make you an individual offer on WhatsApp.", noLocation: "Your location is not available. Please enter the address.", myLocation: "My location", minutes: "min", locale: "en-GB"
   }
@@ -127,6 +150,7 @@ var german = {};
 var picked = { from: null, to: null };
 var trip = null;
 var routeRun = 0;
+var routeDone = Promise.resolve();
 // Prices need the traffic service; the preview can also show them with sample data.
 var priceOn = !!CONFIG.services.trafficKey || CONFIG.preview;
 
@@ -203,8 +227,19 @@ function showPrice() {
   if (!trip || !priceOn) { resultEl.hidden = true; return; }
   var t = TEXT[lang];
   document.getElementById("price").textContent = money(priceFor(trip.km, trip.minutes));
-  document.getElementById("trip").textContent = trip.km.toFixed(1).replace(".", lang === "de" ? "," : ".") + " km, " + Math.round(trip.minutes) + " " + t.minutes;
-  document.getElementById("price-note").textContent = trip.demo ? t.demo : t.finalPrice;
+  var later = form.mode.value === "later";
+  var delay = Math.round(Math.max(trip.minutes - trip.freeMinutes, 0));
+  var when = departure();
+  document.getElementById("q-km").textContent = trip.km.toFixed(1).replace(".", lang === "de" ? "," : ".") + " km";
+  document.getElementById("q-min").textContent = Math.round(trip.minutes) + " " + t.minutes;
+  document.getElementById("q-traffic").textContent = delay ? t.delay.replace("{n}", delay) : t.noDelay;
+  document.getElementById("q-arrive-row").hidden = !(later && when);
+  if (later && when) {
+    document.getElementById("q-arrive").textContent = new Date(new Date(when).getTime() + trip.minutes * 60000).toLocaleTimeString(t.locale, { hour: "2-digit", minute: "2-digit" });
+  }
+  document.getElementById("price-note").textContent = trip.demo ? t.demo : (later ? t.finalPriceLater : t.finalPrice);
+  document.getElementById("sticky-price").textContent = money(priceFor(trip.km, trip.minutes));
+  stickySync();
   resultEl.hidden = false;
 }
 
@@ -305,6 +340,7 @@ if ("IntersectionObserver" in window) {
 /* Route */
 
 function departure() {
+  if (form.mode.value !== "later") return null;
   if (!form.date.value || !form.time.value) return null;
   var when = new Date(form.date.value + "T" + form.time.value + ":00");
   return when.getTime() > Date.now() + 120000 ? form.date.value + "T" + form.time.value + ":00" : null;
@@ -314,7 +350,7 @@ function fetchTrip() {
   var s = CONFIG.services, a = picked.from, b = picked.to;
   if (s.trafficKey) {
     var when = departure();
-    var url = s.traffic + a.lat + "," + a.lon + ":" + b.lat + "," + b.lon + "/json?traffic=true&travelMode=car&key=" + encodeURIComponent(s.trafficKey) + (when ? "&departAt=" + encodeURIComponent(when) : "");
+    var url = s.traffic + a.lat + "," + a.lon + ":" + b.lat + "," + b.lon + "/json?traffic=true&travelMode=car&computeTravelTimeFor=all&key=" + encodeURIComponent(s.trafficKey) + (when ? "&departAt=" + encodeURIComponent(when) : "");
     return fetch(url).then(function (r) {
       if (!r.ok) throw new Error("route");
       return r.json();
@@ -324,7 +360,9 @@ function fetchTrip() {
       route.legs.forEach(function (leg) {
         leg.points.forEach(function (p) { coords.push([p.longitude, p.latitude]); });
       });
-      return { km: route.summary.lengthInMeters / 1000, minutes: route.summary.travelTimeInSeconds / 60, coords: coords, demo: false };
+      var free = route.summary.noTrafficTravelTimeInSeconds;
+      var minutes = route.summary.travelTimeInSeconds / 60;
+      return { km: route.summary.lengthInMeters / 1000, minutes: minutes, freeMinutes: free ? free / 60 : minutes, coords: coords, demo: false };
     });
   }
   if (!CONFIG.preview) return Promise.reject(new Error("no route service"));
@@ -333,7 +371,7 @@ function fetchTrip() {
     return r.json();
   }).then(function (data) {
     var route = data.routes[0];
-    return { km: route.distance / 1000, minutes: route.duration / 60, coords: route.geometry.coordinates, demo: true };
+    return { km: route.distance / 1000, minutes: route.duration / 60, freeMinutes: route.duration / 60, coords: route.geometry.coordinates, demo: true };
   });
 }
 
@@ -342,12 +380,14 @@ function updateRoute() {
   trip = null;
   resultEl.hidden = true;
   statusEl.textContent = "";
+  stickySync();
   drawMap();
+  routeDone = Promise.resolve();
   if (!picked.from || !picked.to) return;
   // Without a price the addresses are still shown on the map; there is nothing to calculate.
   if (!priceOn) return;
   statusEl.textContent = TEXT[lang].working;
-  fetchTrip().then(function (found) {
+  routeDone = fetchTrip().then(function (found) {
     if (run !== routeRun) return;
     if (found.km > CONFIG.pricing.maxKm) {
       statusEl.textContent = TEXT[lang].tooFar;
@@ -399,15 +439,47 @@ function showList(key, places) {
   document.getElementById(key).setAttribute("aria-expanded", String(!!places.length));
 }
 
-function lookup(query) {
+function photonSearch(query) {
   var url = CONFIG.services.search + "?limit=8&lat=50.11&lon=8.68&lang=" + (lang === "de" ? "de" : "en") + "&q=" + encodeURIComponent(query);
-  return fetch(url).then(function (r) { return r.json(); }).then(function (data) {
-    var seen = {};
+  var abort = new AbortController();
+  var timer = setTimeout(function () { abort.abort(); }, 2500);
+  return fetch(url, { signal: abort.signal }).then(function (r) {
+    clearTimeout(timer);
+    if (!r.ok) throw new Error("search");
+    return r.json();
+  }).then(function (data) {
     return (data.features || []).filter(function (f) {
       return f.properties.countrycode === "DE";
     }).map(function (f) {
       return { label: labelOf(f.properties), lat: f.geometry.coordinates[1], lon: f.geometry.coordinates[0] };
-    }).filter(function (place) {
+    });
+  });
+}
+
+function tomtomSearch(query) {
+  var s = CONFIG.services;
+  var url = s.backupSearch + encodeURIComponent(query) + ".json?typeahead=true&limit=5&countrySet=DE&lat=50.11&lon=8.68&language=" + (lang === "de" ? "de-DE" : "en-GB") + "&key=" + encodeURIComponent(s.trafficKey);
+  return fetch(url).then(function (r) {
+    if (!r.ok) throw new Error("search");
+    return r.json();
+  }).then(function (data) {
+    return (data.results || []).map(function (r) {
+      var address = r.address.freeformAddress;
+      return { label: r.poi && r.poi.name ? r.poi.name + ", " + address : address, lat: r.position.lat, lon: r.position.lon };
+    });
+  });
+}
+
+// Photon is free but sometimes unreachable; TomTom takes over for the rest of the visit.
+var photonDown = false;
+function lookup(query) {
+  var found = photonDown ? Promise.reject(new Error("down")) : photonSearch(query).catch(function (e) {
+    photonDown = true;
+    throw e;
+  });
+  return found.catch(function () { return tomtomSearch(query); }).then(function (places) {
+    var seen = {};
+    return places.filter(function (place) {
       if (!place.label || seen[place.label]) return false;
       seen[place.label] = true;
       return true;
@@ -424,12 +496,12 @@ function search(key, query) {
 }
 
 // A typed address that was not tapped in the list still gets a route and a price.
-function resolveTyped(key) {
+function resolveTyped(key, force) {
   var input = document.getElementById(key);
   var query = input.value;
-  if (picked[key] || !query.trim()) return;
-  lookup(query).then(function (places) {
-    if (picked[key] || input.value !== query || document.activeElement === input) return;
+  if (picked[key] || !query.trim()) return Promise.resolve();
+  return lookup(query).then(function (places) {
+    if (picked[key] || input.value !== query || (!force && document.activeElement === input)) return;
     if (places.length) choose(key, places[0]);
     else statusEl.textContent = TEXT[lang].noAddress;
   }).catch(function () {
@@ -447,7 +519,7 @@ function resolveTyped(key) {
     }
     clearTimeout(timer);
     if (!input.value.trim()) { closeList(key); return; }
-    timer = setTimeout(function () { search(key, input.value); }, 150);
+    timer = setTimeout(function () { search(key, input.value); }, 250);
   });
   input.addEventListener("keydown", function (e) {
     var list = document.getElementById(key + "-list");
@@ -477,7 +549,28 @@ function resolveTyped(key) {
 document.querySelectorAll("[data-place]").forEach(function (b) {
   b.addEventListener("click", function () {
     // Fills the empty field; with both filled, a tap replaces the destination.
-    choose(picked.from ? "to" : "from", PLACES[b.getAttribute("data-place")]);
+    choose(b.getAttribute("data-target") || (picked.from ? "to" : "from"), PLACES[b.getAttribute("data-place")]);
+    if (b.getAttribute("data-target")) {
+      document.getElementById("fahrt").scrollIntoView();
+      document.getElementById(picked.from ? "send" : "from").focus({ preventScroll: true });
+    }
+  });
+});
+
+document.getElementById("swap").addEventListener("click", function () {
+  var from = document.getElementById("from"), to = document.getElementById("to");
+  var place = picked.from, text = from.value;
+  picked.from = picked.to;
+  from.value = to.value;
+  picked.to = place;
+  to.value = text;
+  updateRoute();
+});
+
+Array.prototype.forEach.call(form.elements.mode, function (radio) {
+  radio.addEventListener("change", function () {
+    document.getElementById("later-row").hidden = form.mode.value !== "later";
+    updateRoute();
   });
 });
 
@@ -506,22 +599,44 @@ form.time.addEventListener("change", function () { if (CONFIG.services.trafficKe
   form.time.value = pad(d.getHours()) + ":" + pad(d.getMinutes());
 })();
 
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
+function sendRequest() {
   var t = TEXT[lang];
+  var later = form.mode.value === "later";
   var lines = [
     t.request,
     t.from + ": " + form.from.value.trim(),
-    t.to + ": " + form.to.value.trim(),
-    t.date + ": " + form.date.value,
-    t.time + ": " + form.time.value,
-    t.people + ": " + form.people.value
+    t.to + ": " + form.to.value.trim()
   ];
+  if (later) {
+    lines.push(t.date + ": " + form.date.value, t.time + ": " + form.time.value);
+  } else {
+    lines.push(t.whenLabel + ": " + t.asap);
+  }
+  lines.push(t.people + ": " + form.people.value);
   if (form.flight.value.trim()) lines.push(t.flight + ": " + form.flight.value.trim());
   if (form.childseat.checked) lines.push(t.childseat);
   if (trip && priceOn) lines.push(t.price + ": " + money(priceFor(trip.km, trip.minutes)));
   location.href = waLink(lines.join("\n"));
+}
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+  // A typed address may still be on its way to a route: wait briefly so the price is in the message.
+  var ready = Promise.all([resolveTyped("from", true), resolveTyped("to", true)]).then(function () { return routeDone; });
+  var limit = new Promise(function (done) { setTimeout(done, 4000); });
+  Promise.race([ready, limit]).then(sendRequest, sendRequest);
 });
+
+var sendInView = false;
+function stickySync() {
+  document.getElementById("sticky").hidden = !trip || sendInView;
+}
+if ("IntersectionObserver" in window) {
+  new IntersectionObserver(function (entries) {
+    sendInView = entries[entries.length - 1].isIntersecting;
+    stickySync();
+  }).observe(document.getElementById("send"));
+}
 
 /* Page */
 
