@@ -105,14 +105,14 @@ var TEXT = {
     greet: "Hallo Korb Mobility,", biz: "Hallo Korb Mobility, wir interessieren uns für Fahrten für unser Unternehmen.",
     copied: "Kopiert", request: "Fahrtanfrage", from: "Abholung", to: "Ziel", date: "Datum", time: "Uhrzeit", people: "Personen", flight: "Flug", childseat: "Kindersitz gewünscht", price: "Angezeigter Preis",
     finalPrice: "Endpreis inkl. MwSt., abhängig vom Verkehr.",
-    demo: "Vorschau: Beispieltarif ohne Verkehrsdaten.", working: "Route wird berechnet", failed: "Den Preis nennen wir Ihnen auf WhatsApp.",
+    demo: "Vorschau: Beispieltarif ohne Verkehrsdaten.", working: "Route wird berechnet", failed: "Den Preis nennen wir Ihnen auf WhatsApp.", noAddress: "Adresse nicht gefunden. Bitte prüfen Sie die Eingabe.",
     tooFar: "Für so lange Strecken machen wir Ihnen ein Angebot auf WhatsApp.", noLocation: "Ihr Standort ist nicht verfügbar. Bitte geben Sie die Adresse ein.", myLocation: "Mein Standort", minutes: "Min.", locale: "de-DE"
   },
   en: {
     greet: "Hello Korb Mobility,", biz: "Hello Korb Mobility, we are interested in rides for our company.",
     copied: "Copied", request: "Ride request", from: "Pick-up", to: "Destination", date: "Date", time: "Time", people: "People", flight: "Flight", childseat: "Child seat needed", price: "Price shown",
     finalPrice: "Final price including VAT, based on traffic.",
-    demo: "Preview: sample tariff without traffic data.", working: "Calculating your route", failed: "We will send you the price on WhatsApp.",
+    demo: "Preview: sample tariff without traffic data.", working: "Calculating your route", failed: "We will send you the price on WhatsApp.", noAddress: "Address not found. Please check what you entered.",
     tooFar: "For trips this long we make you an individual offer on WhatsApp.", noLocation: "Your location is not available. Please enter the address.", myLocation: "My location", minutes: "min", locale: "en-GB"
   }
 };
@@ -399,12 +399,11 @@ function showList(key, places) {
   document.getElementById(key).setAttribute("aria-expanded", String(!!places.length));
 }
 
-function search(key, query) {
+function lookup(query) {
   var url = CONFIG.services.search + "?limit=8&lat=50.11&lon=8.68&lang=" + (lang === "de" ? "de" : "en") + "&q=" + encodeURIComponent(query);
-  fetch(url).then(function (r) { return r.json(); }).then(function (data) {
-    if (document.getElementById(key).value !== query) return;
+  return fetch(url).then(function (r) { return r.json(); }).then(function (data) {
     var seen = {};
-    var places = (data.features || []).filter(function (f) {
+    return (data.features || []).filter(function (f) {
       return f.properties.countrycode === "DE";
     }).map(function (f) {
       return { label: labelOf(f.properties), lat: f.geometry.coordinates[1], lon: f.geometry.coordinates[0] };
@@ -413,8 +412,29 @@ function search(key, query) {
       seen[place.label] = true;
       return true;
     }).slice(0, 5);
+  });
+}
+
+function search(key, query) {
+  var input = document.getElementById(key);
+  lookup(query).then(function (places) {
+    if (input.value !== query || document.activeElement !== input) return;
     showList(key, places);
   }).catch(function () { closeList(key); });
+}
+
+// A typed address that was not tapped in the list still gets a route and a price.
+function resolveTyped(key) {
+  var input = document.getElementById(key);
+  var query = input.value;
+  if (picked[key] || !query.trim()) return;
+  lookup(query).then(function (places) {
+    if (picked[key] || input.value !== query || document.activeElement === input) return;
+    if (places.length) choose(key, places[0]);
+    else statusEl.textContent = TEXT[lang].noAddress;
+  }).catch(function () {
+    if (input.value === query) statusEl.textContent = TEXT[lang].noAddress;
+  });
 }
 
 ["from", "to"].forEach(function (key) {
@@ -446,7 +466,12 @@ function search(key, query) {
       closeList(key);
     }
   });
-  input.addEventListener("blur", function () { setTimeout(function () { closeList(key); }, 120); });
+  input.addEventListener("blur", function () {
+    setTimeout(function () {
+      closeList(key);
+      resolveTyped(key);
+    }, 120);
+  });
 });
 
 document.querySelectorAll("[data-place]").forEach(function (b) {
