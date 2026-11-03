@@ -8,6 +8,7 @@ Open `site/site.js` and set before going live:
 - `pricing` holds the tariff (demo values until compared with real prices)
 - `services.trafficKey`: free TomTom key for distance and live traffic. Without it, the published site asks for address and date only and sends them to WhatsApp
 - `licensed: true` once the Genehmigung is granted: shows the price calculator and ride sections
+- `impressum.html`: add the licensing authority and licence type (§ 49 Abs. 4 PBefG) at the same time
 
 Yellow highlighted text in `impressum.html` and `datenschutz.html` must be filled in before publishing.
 

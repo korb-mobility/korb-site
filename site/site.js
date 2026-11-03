@@ -3,7 +3,7 @@ var CONFIG = {
   // Set to true once the Genehmigung is granted: shows the ride request and the ride sections.
   licensed: false,
   // Set to false before publishing: removes the blue preview bar and the demo note.
-  preview: true,
+  preview: false,
   whatsapp: "4915777104912",
   pricing: {
     // DEMO values: replace after comparing real prices in the Uber app.
