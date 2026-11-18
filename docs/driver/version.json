@@ -1,10 +1,10 @@
 {
- "versionCode": 43,
- "versionName": "3.35",
- "sha256": "e2c9504dde202eededdc988be866f42ce4d67ba2187ff8c73d220085f9918258",
- "url": "https://transfer-ride.github.io/driver/transfer-fahrer-43.apk",
- "notes": "Android Auto: die App nimmt nie den Ton – Autoradio und Musik laufen weiter.",
- "notes_de": "Android Auto: die App nimmt nie den Ton – Autoradio und Musik laufen weiter.",
- "notes_en": "Android Auto: the app never takes the audio – car radio and music keep playing.",
- "notes_el": "Android Auto: η εφαρμογή δεν παίρνει ποτέ τον ήχο – το ραδιόφωνο και η μουσική συνεχίζουν."
+ "versionCode": 44,
+ "versionName": "3.36",
+ "sha256": "c22c9923c919ae8f5414fc36add66286c825fb710eb6e0346b748ca8a2e3e3b8",
+ "url": "https://transfer-ride.github.io/driver/transfer-fahrer-44.apk",
+ "notes": "Android Auto: Waze links, Transfer rechts – automatisch beim Verbinden, ohne den Ton zu nehmen.",
+ "notes_de": "Android Auto: Waze links, Transfer rechts – automatisch beim Verbinden, ohne den Ton zu nehmen.",
+ "notes_en": "Android Auto: Waze on the left, Transfer on the right – automatically on connecting, without taking the audio.",
+ "notes_el": "Android Auto: Waze αριστερά, Transfer δεξιά – αυτόματα με τη σύνδεση, χωρίς να παίρνει τον ήχο."
 }
