@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Transfer Zentrale</title>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/vendor/maplibre-gl.css">
+<link rel="stylesheet" href="admin.css?v=2">
+<!-- © Transfer. Alle Rechte vorbehalten. -->
+</head>
+<body>
+
+<!-- Sign-in -->
+<main class="login" id="login">
+  <form class="login-card" id="login-form" autocomplete="off">
+    <div class="brand">TRANSFER<span>.</span> <small data-t="central">Zentrale</small></div>
+    <label><span data-t="pin">Fahrer-PIN</span><input name="pin" inputmode="numeric" maxlength="4" pattern="\d{4}" required autocomplete="off"></label>
+    <label><span data-t="password">Admin-Passwort</span><input name="password" type="password" required autocomplete="current-password"></label>
+    <button class="btn main" type="submit" data-t="signIn">Anmelden</button>
+    <p class="msg" id="login-msg"></p>
+    <div class="langs"><button type="button" data-lang="de">DE</button><button type="button" data-lang="el">EL</button></div>
+  </form>
+</main>
+
+<!-- Dashboard -->
+<div class="app" id="app" hidden>
+  <header class="top">
+    <div class="brand">TRANSFER<span>.</span> <small data-t="central">Zentrale</small></div>
+    <nav class="tabs" id="tabs">
+      <button data-tab="live" class="on" data-t="tLive">Live</button>
+      <button data-tab="rides" data-t="tRides">Fahrten</button>
+      <button data-tab="phone" data-t="tPhone">Telefonbuchung</button>
+      <button data-tab="drivers" data-t="tDrivers">Fahrer</button>
+      <button data-tab="reports" data-t="tReports">Meldungen</button>
+    </nav>
+    <div class="who"><span id="me"></span><span class="langs"><button type="button" data-lang="de">DE</button><button type="button" data-lang="el">EL</button></span><button class="btn small" id="logout" data-t="signOut">Abmelden</button></div>
+  </header>
+
+  <section class="kpis" id="kpis"></section>
+
+  <!-- Live -->
+  <section class="tab live" data-pane="live">
+    <div class="map" id="map"></div>
+    <aside class="side">
+      <h2><span data-t="open">Offene Anfragen</span> <b id="open-n">0</b></h2>
+      <div id="open-list" class="list"></div>
+      <h2><span data-t="active">Laufende Fahrten</span> <b id="active-n">0</b></h2>
+      <div id="active-list" class="list"></div>
+      <h2><span data-t="drivers">Fahrer</span> <b id="online-n">0</b></h2>
+      <div id="driver-list" class="list"></div>
+    </aside>
+  </section>
+
+  <!-- Rides -->
+  <section class="tab" data-pane="rides" hidden>
+    <div class="filters">
+      <select id="f-status">
+        <option value="all" data-t="sAll">Alle</option><option value="new" data-t="s_new">Neu</option><option value="done" data-t="s_done">Abgeschlossen</option>
+        <option value="cancelled" data-t="s_cancelled">Storniert</option><option value="expired" data-t="s_expired">Abgelaufen</option>
+      </select>
+      <select id="f-days"><option value="1" data-t="d1">Heute</option><option value="7" selected data-t="d7">7 Tage</option><option value="30" data-t="d30">30 Tage</option><option value="365" data-t="d365">1 Jahr</option></select>
+      <input id="f-search" data-tp="search" placeholder="Name, Telefon, Adresse, Nr.">
+      <button class="btn small" id="f-csv">CSV</button>
+      <span class="sum" id="f-sum"></span>
+    </div>
+    <div class="table-wrap"><table class="rides"><thead><tr>
+      <th data-t="hWhen">Zeit</th><th data-t="hNr">Nr.</th><th data-t="hCustomer">Kunde</th><th data-t="hRoute">Strecke</th>
+      <th data-t="hDriver">Fahrer</th><th data-t="hStatus">Status</th><th data-t="hPrice">Preis</th><th></th>
+    </tr></thead><tbody id="rides-body"></tbody></table></div>
+  </section>
+
+  <!-- Phone booking -->
+  <section class="tab narrow" data-pane="phone" hidden>
+    <form class="card" id="phone-form" autocomplete="off">
+      <h2 data-t="phoneTitle">Fahrt am Telefon aufnehmen</h2>
+      <div class="grid2">
+        <label><span data-t="cName">Name des Kunden</span><input name="name" required maxlength="100"></label>
+        <label><span data-t="cPhone">Telefon</span><input name="phone" type="tel" required maxlength="25" pattern="\+?[0-9 ()/\-]{6,25}"></label>
+      </div>
+      <label class="addr"><span data-t="from">Abholung</span><input name="from" required><div class="sugg" data-for="from"></div></label>
+      <label class="addr"><span data-t="to">Ziel</span><input name="to" required><div class="sugg" data-for="to"></div></label>
+      <div class="grid3">
+        <label><span data-t="when">Wann</span><select name="mode"><option value="asap" data-t="asap">Sofort</option><option value="later" data-t="later">Termin</option></select></label>
+        <label><span data-t="date">Datum</span><input name="date" type="date"></label>
+        <label><span data-t="time">Uhrzeit</span><input name="time" type="time"></label>
+      </div>
+      <div class="grid3">
+        <label><span data-t="people">Personen</span><input name="people" type="number" min="1" max="8" value="1"></label>
+        <label><span data-t="price">Preis (€)</span><input name="price" type="number" step="0.1" min="0"></label>
+        <label><span data-t="assign">Fahrer</span><select name="driver"><option value="" data-t="toAll">An alle senden</option></select></label>
+      </div>
+      <label><span data-t="note">Notiz für den Fahrer</span><input name="note" maxlength="500"></label>
+      <p class="quote" id="quote"></p>
+      <button class="btn main" type="submit" data-t="book">Fahrt anlegen</button>
+      <p class="msg" id="phone-msg"></p>
+    </form>
+  </section>
+
+  <!-- Drivers -->
+  <section class="tab" data-pane="drivers" hidden>
+    <div class="filters">
+      <select id="ds-days"><option value="7" data-t="d7">7 Tage</option><option value="30" selected data-t="d30">30 Tage</option><option value="365" data-t="d365">1 Jahr</option></select>
+      <button class="btn small main" id="d-new" data-t="newDriver">+ Neuer Fahrer</button>
+    </div>
+    <div class="table-wrap"><table class="rides"><thead><tr>
+      <th data-t="hName">Name</th><th data-t="hPlate">Kennzeichen</th><th data-t="hType">Art</th><th data-t="hState">Status</th>
+      <th data-t="hRides">Fahrten</th><th data-t="hSum">Umsatz</th><th>km</th><th data-t="hCancelled">Storniert</th><th>★</th><th></th>
+    </tr></thead><tbody id="drivers-body"></tbody></table></div>
+    <form class="card" id="driver-form" hidden>
+      <h2 id="driver-form-title"></h2>
+      <input type="hidden" name="id">
+      <div class="grid2">
+        <label><span data-t="hName">Name</span><input name="name" required maxlength="80"></label>
+        <label><span data-t="hPlate">Kennzeichen</span><input name="plate" maxlength="20"></label>
+        <label><span data-t="hType">Art</span><select name="type"><option value="mietwagen">Mietwagen</option><option value="taxi">Taxi</option></select></label>
+        <label><span data-t="newPin">Neue PIN (4 Ziffern)</span><input name="pin" inputmode="numeric" maxlength="4" pattern="\d{4}" autocomplete="off"></label>
+      </div>
+      <label class="check"><input type="checkbox" name="active" checked><span data-t="activeLbl">Aktiv (darf sich anmelden)</span></label>
+      <div class="row"><button class="btn main" type="submit" data-t="save">Speichern</button><button class="btn" type="button" id="driver-cancel" data-t="close">Schließen</button></div>
+      <p class="msg" id="driver-msg"></p>
+    </form>
+  </section>
+
+  <!-- Road reports -->
+  <section class="tab" data-pane="reports" hidden>
+    <p class="hint" data-t="reportsHint">Meldungen der Fahrer aus den letzten 2 Stunden. Falsches oder Unpassendes hier löschen.</p>
+    <div id="reports-list" class="list cards"></div>
+  </section>
+</div>
+
+<!-- Booking details -->
+<dialog id="detail"><div id="detail-body"></div><form method="dialog"><button class="btn" data-t="close">Schließen</button></form></dialog>
+
+<script src="../assets/vendor/maplibre-gl.js"></script>
+<script src="admin.js?v=2"></script>
+</body>
+</html>
