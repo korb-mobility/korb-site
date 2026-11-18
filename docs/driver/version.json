@@ -1,10 +1,10 @@
 {
- "versionCode": 41,
- "versionName": "3.33",
- "sha256": "c2746e7de8c091dd71816618b7415a675c4fb2eeb2ae3f98e81fa0b254a5e70e",
- "url": "https://transfer-ride.github.io/driver/transfer-fahrer-41.apk",
- "notes": "Android Auto: Waze auf der einen Seite, Transfer auf der anderen. Neue Fahrt erscheint automatisch mit Preis, ✓ Annehmen und ✕ Ablehnen; der Pfeil öffnet Waze zur Abholung.",
- "notes_de": "Android Auto: Waze auf der einen Seite, Transfer auf der anderen. Neue Fahrt erscheint automatisch mit Preis, ✓ Annehmen und ✕ Ablehnen; der Pfeil öffnet Waze zur Abholung.",
- "notes_en": "Android Auto: Waze on one side, Transfer on the other. A new ride appears by itself with price, ✓ accept and ✕ decline; the arrow opens Waze to the pick-up.",
- "notes_el": "Android Auto: Waze από τη μία μεριά, Transfer από την άλλη. Η νέα διαδρομή εμφανίζεται μόνη της με τιμή, ✓ αποδοχή και ✕ απόρριψη· το βέλος ανοίγει το Waze για την παραλαβή."
+ "versionCode": 42,
+ "versionName": "3.34",
+ "sha256": "0fb5f3491ca3179f201c4f57cc9f8c1b62ca30d982cb1e481e500e8f987b25e1",
+ "url": "https://transfer-ride.github.io/driver/transfer-fahrer-42.apk",
+ "notes": "Android Auto: neue Karte mit Preis, Minuten und km bis zur Abholung, Fahrtlänge und Name; Reiter Jetzt, Wartend, Termine, Heute; kein Play/Pause mehr.",
+ "notes_de": "Android Auto: neue Karte mit Preis, Minuten und km bis zur Abholung, Fahrtlänge und Name; Reiter Jetzt, Wartend, Termine, Heute; kein Play/Pause mehr.",
+ "notes_en": "Android Auto: new card with price, minutes and km to pick-up, ride length and name; tabs Now, Waiting, Booked, Today; no more play/pause.",
+ "notes_el": "Android Auto: νέα κάρτα με ποσό, λεπτά και km ως την παραλαβή, μήκος διαδρομής και όνομα· καρτέλες Τώρα, Σε αναμονή, Κλεισμένες, Σήμερα· χωρίς play/pause."
 }
