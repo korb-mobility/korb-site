@@ -1,10 +1,10 @@
 {
- "versionCode": 42,
- "versionName": "3.34",
- "sha256": "0fb5f3491ca3179f201c4f57cc9f8c1b62ca30d982cb1e481e500e8f987b25e1",
- "url": "https://transfer-ride.github.io/driver/transfer-fahrer-42.apk",
- "notes": "Android Auto: neue Karte mit Preis, Minuten und km bis zur Abholung, Fahrtlänge und Name; Reiter Jetzt, Wartend, Termine, Heute; kein Play/Pause mehr.",
- "notes_de": "Android Auto: neue Karte mit Preis, Minuten und km bis zur Abholung, Fahrtlänge und Name; Reiter Jetzt, Wartend, Termine, Heute; kein Play/Pause mehr.",
- "notes_en": "Android Auto: new card with price, minutes and km to pick-up, ride length and name; tabs Now, Waiting, Booked, Today; no more play/pause.",
- "notes_el": "Android Auto: νέα κάρτα με ποσό, λεπτά και km ως την παραλαβή, μήκος διαδρομής και όνομα· καρτέλες Τώρα, Σε αναμονή, Κλεισμένες, Σήμερα· χωρίς play/pause."
+ "versionCode": 43,
+ "versionName": "3.35",
+ "sha256": "e2c9504dde202eededdc988be866f42ce4d67ba2187ff8c73d220085f9918258",
+ "url": "https://transfer-ride.github.io/driver/transfer-fahrer-43.apk",
+ "notes": "Android Auto: die App nimmt nie den Ton – Autoradio und Musik laufen weiter.",
+ "notes_de": "Android Auto: die App nimmt nie den Ton – Autoradio und Musik laufen weiter.",
+ "notes_en": "Android Auto: the app never takes the audio – car radio and music keep playing.",
+ "notes_el": "Android Auto: η εφαρμογή δεν παίρνει ποτέ τον ήχο – το ραδιόφωνο και η μουσική συνεχίζουν."
 }
