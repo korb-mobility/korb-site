@@ -1,10 +1,10 @@
 {
- "versionCode": 40,
- "versionName": "3.32",
- "sha256": "8ec4f5464db7d68d85f7514732d5c57ab0a10f2500ae915569b3e402e891abcb",
- "url": "https://transfer-ride.github.io/driver/transfer-fahrer-40.apk",
- "notes": "Android Auto wie Uber Driver: eigene Karte im großen Teil des geteilten Bildschirms, Fahrtangebot mit Annehmen/Ablehnen, Navigation mit Abbiegepfeilen und Ansage.",
- "notes_de": "Android Auto wie Uber Driver: eigene Karte im großen Teil des geteilten Bildschirms, Fahrtangebot mit Annehmen/Ablehnen, Navigation mit Abbiegepfeilen und Ansage.",
- "notes_en": "Android Auto like Uber Driver: own map in the big part of the split screen, ride offer with accept/decline, turn-by-turn navigation with voice.",
- "notes_el": "Android Auto όπως το Uber Driver: δικός μας χάρτης στο μεγάλο μέρος της διαιρεμένης οθόνης, προσφορά διαδρομής με αποδοχή/απόρριψη, πλοήγηση με βέλη και φωνή."
+ "versionCode": 41,
+ "versionName": "3.33",
+ "sha256": "c2746e7de8c091dd71816618b7415a675c4fb2eeb2ae3f98e81fa0b254a5e70e",
+ "url": "https://transfer-ride.github.io/driver/transfer-fahrer-41.apk",
+ "notes": "Android Auto: Waze auf der einen Seite, Transfer auf der anderen. Neue Fahrt erscheint automatisch mit Preis, ✓ Annehmen und ✕ Ablehnen; der Pfeil öffnet Waze zur Abholung.",
+ "notes_de": "Android Auto: Waze auf der einen Seite, Transfer auf der anderen. Neue Fahrt erscheint automatisch mit Preis, ✓ Annehmen und ✕ Ablehnen; der Pfeil öffnet Waze zur Abholung.",
+ "notes_en": "Android Auto: Waze on one side, Transfer on the other. A new ride appears by itself with price, ✓ accept and ✕ decline; the arrow opens Waze to the pick-up.",
+ "notes_el": "Android Auto: Waze από τη μία μεριά, Transfer από την άλλη. Η νέα διαδρομή εμφανίζεται μόνη της με τιμή, ✓ αποδοχή και ✕ απόρριψη· το βέλος ανοίγει το Waze για την παραλαβή."
 }
