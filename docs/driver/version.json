@@ -1,10 +1,10 @@
 {
- "versionCode": 45,
- "versionName": "3.37",
- "sha256": "e173725722d757d9e9c7da3554713d8f775b8da44521bd72ec211a162e3e2b7f",
- "url": "https://transfer-ride.github.io/driver/transfer-fahrer-45.apk",
- "notes": "Android Auto: neue Fahrt kommt rechts neben Waze nach vorne; Musik pausiert nur, bis du annimmst oder ablehnst.",
- "notes_de": "Android Auto: neue Fahrt kommt rechts neben Waze nach vorne; Musik pausiert nur, bis du annimmst oder ablehnst.",
- "notes_en": "Android Auto: a new ride comes forward right of Waze; music pauses only until you accept or decline.",
- "notes_el": "Android Auto: η νέα διαδρομή έρχεται μπροστά δεξιά από το Waze· η μουσική σταματά μόνο μέχρι να αποδεχτείς ή να απορρίψεις."
+ "versionCode": 46,
+ "versionName": "3.38",
+ "sha256": "e87ea7c9304f2bea53fdfa7ddfd6fca2e462d573c02d7b55b1625f52b26c5b4f",
+ "url": "https://transfer-ride.github.io/driver/transfer-fahrer-46.apk",
+ "notes": "Tobias sieht den Standort auch bei geschlossener App, für genaue Ankunftszeiten (abschaltbar in den Einstellungen).",
+ "notes_de": "Tobias sieht den Standort auch bei geschlossener App, für genaue Ankunftszeiten (abschaltbar in den Einstellungen).",
+ "notes_en": "Tobias sees your location also with the app closed, for exact arrival times (can be switched off in Settings).",
+ "notes_el": "Ο Tobias βλέπει την τοποθεσία και με κλειστή εφαρμογή, για ακριβείς ώρες άφιξης (απενεργοποιείται στις Ρυθμίσεις)."
 }
