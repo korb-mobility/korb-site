@@ -1,10 +1,10 @@
 {
- "versionCode": 47,
- "versionName": "3.39",
- "sha256": "6b3dc54a5c443aac73112a31d7d63532873506467ca6111b130621f8e3f48c70",
- "url": "https://transfer-ride.github.io/driver/transfer-fahrer-47.apk",
- "notes": "Mit Android Auto startet \"Ich fahre los\" die Navigation in Waze. Fahrten: zuerst \"Alle\", neuer Reiter \"Storniert\".",
- "notes_de": "Mit Android Auto startet \"Ich fahre los\" die Navigation in Waze. Fahrten: zuerst \"Alle\", neuer Reiter \"Storniert\".",
- "notes_en": "With Android Auto, \"Start driving\" opens Waze. Rides: \"All\" first, new \"Cancelled\" tab.",
- "notes_el": "Με Android Auto το «Ξεκινάω» ανοίγει το Waze. Διαδρομές: πρώτα «Όλες», νέα καρτέλα «Ακυρωμένες»."
+ "versionCode": 48,
+ "versionName": "3.40",
+ "sha256": "5d3f93a6d1dcbb649742ad383fff45a034a2cfd118905a17fa7a2638fb4c74f1",
+ "url": "https://transfer-ride.github.io/driver/transfer-fahrer-48.apk",
+ "notes": "Android Auto: Waze und Google Maps nach dem Annehmen, QR-Code-Karte, kurzer Ton bei Stornierung, Liste „Alle“ nach Tagen, Karte wie Google Maps",
+ "notes_de": "Android Auto: Waze und Google Maps nach dem Annehmen, QR-Code-Karte, kurzer Ton bei Stornierung, Liste „Alle“ nach Tagen, Karte wie Google Maps",
+ "notes_en": "Android Auto: Waze and Google Maps after accepting, QR code card, short sound on cancellation, “All” list by day, map like Google Maps",
+ "notes_el": "Android Auto: Waze και Google Maps μετά την αποδοχή, κάρτα QR, σύντομος ήχος στην ακύρωση, λίστα «Όλες» ανά μέρα, χάρτης όπως στο Google Maps"
 }
